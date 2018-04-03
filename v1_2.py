@@ -36,10 +36,8 @@ for row in range(5):
 #This version stops when it finds the first, so it wont take hundreds of hours
 
 successes = []
-state = range(2**24) 
-np.random.shuffle(state)   #randomize the selection in case all the succesful networks are clustered together (may take too long to find the first success)
 
-for n in state:
+for n in range(2**24):
 	b = np.binary_repr(n,24)      #keeps width fixed
 	b = b[:4] + '1' + b[4:] 	  #adds the one for the constant Sp8 to Fgf8 interaction
 	s = np.array(list(b)).reshape(5,5)
@@ -102,10 +100,9 @@ for n in state:
 	if np.all(astate[T,:] == astate[T-1,:]) and np.all(astate[T,:5] == np.array([1.,0.,1.,0.,1.])) and np.all(pstate[T,:] == pstate[T-1,:]) and np.all(pstate[T,:5] == np.array([0.,1.,0.,1.,0.])):
 		successes.append(n)
 
-	if successes != []:
-		break
 
 
 print(successes)
+print(len(successes))
 		
 

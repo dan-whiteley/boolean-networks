@@ -37,7 +37,10 @@ for row in range(5):
 
 successes = []
 state = range(2**24) 
-np.random.shuffle(state)   #randomize the selection in case all the succesful networks are clustered together (may take too long to find the first success)
+np.random.shuffle(state)   	#randomize the selection in case all the succesful networks are clustered together (may take too long to find the first success)
+
+
+trials = 0 			#to find successful proportion = successes/trials
 
 for n in state:
 	b = np.binary_repr(n,24)      #keeps width fixed
@@ -102,10 +105,14 @@ for n in state:
 	if np.all(astate[T,:] == astate[T-1,:]) and np.all(astate[T,:5] == np.array([1.,0.,1.,0.,1.])) and np.all(pstate[T,:] == pstate[T-1,:]) and np.all(pstate[T,:5] == np.array([0.,1.,0.,1.,0.])):
 		successes.append(n)
 
-	if successes != []:
+	trials = trials + 1
+
+	if len(successes) == 50:
 		break
 
 
-print(successes)
+print(trials)
+print('Success Fraction:')
+print(50/trials)
 		
 
