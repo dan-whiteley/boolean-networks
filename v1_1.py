@@ -107,12 +107,13 @@ for n in state:
 
 	trials = trials + 1
 
-	if len(successes) == 50:
+	if len(successes) == 5:
 		break
 
 
 print(trials)
 print('Success Fraction:')
-print(50/trials)
-		
+print(5./trials)
+
+#result on order of 0.01%
 

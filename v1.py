@@ -102,7 +102,7 @@ for n in state:
 	if np.all(astate[T,:] == astate[T-1,:]) and np.all(astate[T,:5] == np.array([1.,0.,1.,0.,1.])) and np.all(pstate[T,:] == pstate[T-1,:]) and np.all(pstate[T,:5] == np.array([0.,1.,0.,1.,0.])):
 		successes.append(n)
 
-	if successes != []:
+	if len(successes) == 1:
 		break
 
 
