@@ -38,7 +38,7 @@ for row in range(5):
 
 successes = []
 
-n = 4270766				  #random successful network
+n = 13348152			  #random successful network
 b = np.binary_repr(n,24)      #keeps width fixed
 b = b[:4] + '1' + b[4:] 	  #adds the one for the constant Sp8 to Fgf8 interaction
 s = np.array(list(b)).reshape(5,5)
