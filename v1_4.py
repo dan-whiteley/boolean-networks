@@ -44,8 +44,17 @@ def tree(base,graph,cycle,bias):
 			yco = graph[c][2][0]*np.sin(np.radians(mid)) + bias
 			graph[c][2][3] = xco 
 			graph[c][2][4] = yco
-			plt.plot(xco,yco,'o',markersize=4)					
-			plt.arrow(xco, yco, graph[base][2][3]-xco, graph[base][2][4]-yco, head_width=0.01, head_length=0.01, fc='k', ec='k')
+			
+			#find difference from [1000010000] state
+			binstate = np.binary_repr(c)
+			d = bin(int(binstate,2)^int('1000010000',2))[2:].count('1')
+			d = d/10.
+
+			#make further away states lighter
+			col = (d,d,d)
+
+			plt.plot(xco,yco,'o',markersize=4, color=col)					
+			plt.arrow(xco, yco, graph[base][2][3]-xco, graph[base][2][4]-yco, head_width=0.01, head_length=0.01, fc=col, ec=col)
 
 
 	for z in parents:
