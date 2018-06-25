@@ -1,0 +1,62 @@
+v2.py - 3 genes, fitness defined as number of states that converge on '101', returns values of fitness for all 2^24 networks
+
+v2_1.py - takes random sample of networks and finds average fitness as a function of number of mutations away from those networks. Returns 'best' and 'worst' networks from sample.
+
+v2_2.py - plots the results of v2_1 for 1 or 2 reference networks.
+
+v2_3.py - calculate a value which measures how much of a fit cluster the network is in, then move through the space of 2^24 networks maximising this value, hopefully finding a smooth landscape of fit networks.
+
+v2_4.py - visualise the small area found in v2_3 in more detail.
+
+
+INTRODUCTION:
+
+This is a first attempt to look at random boolean-networks and how to visualise the phenotypic landscape they produce.
+
+These networks have all-to-all gene interactions, the truth table which defines the interactions is random.
+
+There is a separate truth-table for each gene, and each table has 2^n possible states, each with 2 outcomes.
+
+EG, for 3 genes one row could be...
+A(t) B C | A(t+1) 
+0    1 0 | 1
+
+Which means in the case A = 0, B = 1, C = 0, the state of A will change to 1.
+
+There would be another table for B, and another for C. The outcome in the right column is what's randomised so there are 2^(N*2^N) total options where N = number of genes.
+
+A BASIC MEASURE OF FITNESS CAN BE SOLVED ANALYTICALLY:
+
+With so many options I will make a very simple test for 'fitness', namely that '101' is a stable point.
+
+My notation for the truth tables and outcomes will be as follows:
+Possible outcomes are the binary numbers from 0 to 2^24, by dividing the index of each digit by 8 you find which gene is being effected and which state it is applying to, by the quotient and remainder respectively.
+For quotient 0,1 and 2, the genes are A, B and C.  
+For example one possible outcome is out = '100110101000000000000000'
+out[0]=1, 0/8 = 0 remainder 0.
+gene affected = A
+state is bin(0) = 000
+i.e
+A B C | A(t+1) 
+0 0 0 | 1
+
+Another example,
+out[9] = 1
+9/8 = 1 remainder 1
+giving...
+A B C | B(t+1) 
+0 0 1 | 1
+
+The test for fitness is then simply that 101 leads to 1 for A, 0 for B, 1 for C
+So out[5] = 1, out[13] = 0, out[21] = 1, clearly there are 2^21 networks that will satisfy this requirement!
+Also, the visualisation of which outcomes are the fit ones will be uninteresting, if drawn as a tree everything will be unfit except for all nodes stemming from a crucial branch.
+
+THE MEASURE OF FITNESS THIS MODEL WILL USE:
+
+Perhaps a more interesting test for fitness is 'what number of states develop to the desired stable point?'. v2_1.py will calculate this for all possible networks, each one gets a value from 0 to 8. The difficulty comes from visualising the 24D space that results, each network is one mutation away from 24 others, so drawing a graph that moves only a few steps away gets very messy and involves thousands of nodes. v2_3.py searches the space for a good cluster of fit networks so that these can be visualised in more detail.
+
+QUESTIONS:
+-For biological models what is a reasonable measure of fitness?
+-What dynamical properties are interesting?
+-For 5 genes how can the network space be constrained so that there are fewer than 2^160 options?
+
